@@ -12,8 +12,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   // List of tasks
   final List toDoList= [
-    ['Make bed', false],
-    ['Study hard', false],
+    ["Make your bed", false],
+    ["Learn github", false],
+    ["Make an app", false]
   ];
 
   // finish task

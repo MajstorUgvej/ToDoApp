@@ -1,0 +1,54 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+
+class TaskBlock extends StatelessWidget {
+  
+  final String text;
+  final bool isChecked;
+  final Function(bool?)? onChanged;
+  final VoidCallback delete;
+  
+  const TaskBlock({super.key, 
+    required this.text, 
+    required this.isChecked, 
+    required this.onChanged,
+    required this.delete
+  });
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+          padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
+          child: Slidable(
+            endActionPane: ActionPane(motion: StretchMotion(),
+             children: [
+              SlidableAction(
+                onPressed: (context) => delete(),
+                icon: Icons.delete,
+                backgroundColor: Colors.red,
+                borderRadius: BorderRadius.circular(15),
+                
+              )
+            ],),
+            child: Container(
+              padding: EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 255, 211, 105),
+                borderRadius: BorderRadius.circular(15)
+              ),
+              child: Row(
+                children: [
+                  Checkbox(value: isChecked, onChanged: onChanged, activeColor: Color.fromARGB(255, 34, 40, 49),),
+                  Text(text, style: TextStyle(
+                    decoration: isChecked? TextDecoration.lineThrough : TextDecoration.none,
+                    color: Color.fromARGB(255, 34, 40, 49),
+                    fontSize: 15
+                  ),),
+                ],
+              ),
+            ),
+          ),
+    );
+  }
+}

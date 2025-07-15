@@ -8,17 +8,16 @@ void main() async
   WidgetsFlutterBinding.ensureInitialized();
   final localDb = LocalDb();
   await localDb.database;
-  runApp(MyApp(db: localDb));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final LocalDb db;
-  const MyApp({super.key, required this.db});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(db : db),
+      home: HomePage(),
     );
   }
 }

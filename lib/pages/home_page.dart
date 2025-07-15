@@ -4,14 +4,16 @@ import 'package:masterclass_2/utilities/add_window.dart';
 import 'package:masterclass_2/utilities/task_block.dart';
 
 class HomePage extends StatefulWidget {
-  final LocalDb db;
-  const HomePage({super.key, required this.db});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  // Instance of LocalDb to access the database
+  final LocalDb db = LocalDb();
+
   // List of tasks
   final List toDoList= [
     ["Make your bed", false],
@@ -31,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   TextEditingController myController = TextEditingController();
 
   // save task
-  void onSaved()
+  void onSaved() async
   {
     setState(() {
       toDoList.add([myController.text, false]);

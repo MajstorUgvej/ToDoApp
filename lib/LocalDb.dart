@@ -55,7 +55,8 @@ class LocalDb {
   // Fetching all tasks from the database
   Future<List<Map<String, dynamic>>> fetchTasks() async {
     final db = await database;
-    return await db.rawQuery('SELECT * FROM tasks');
+    final vare = await db.rawQuery('SELECT * FROM tasks');
+    return vare;
   }
-  
+
 }

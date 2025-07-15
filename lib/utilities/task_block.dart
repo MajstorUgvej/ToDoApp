@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:masterclass_2/LocalDb.dart';
 
 class TaskBlock extends StatelessWidget {
   
@@ -8,13 +9,14 @@ class TaskBlock extends StatelessWidget {
   final Function(bool?)? onChanged;
   final VoidCallback delete;
   
-  const TaskBlock({super.key, 
+  TaskBlock({super.key, 
     required this.text, 
     required this.isChecked, 
     required this.onChanged,
     required this.delete
   });
 
+  final LocalDb db = LocalDb();
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,9 @@ class TaskBlock extends StatelessWidget {
               ),
               SlidableAction(
                 flex: 2,
-                onPressed: (context) => onChanged!(isChecked),
+                onPressed: (context) {
+                  // TODO: Implement edit functionality
+                },
                 icon: Icons.edit,
                 backgroundColor: Colors.blue,
                 borderRadius: BorderRadius.only(

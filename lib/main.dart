@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:masterclass_2/LocalDb.dart';
 import 'package:masterclass_2/pages/home_page.dart';
 
-void main()
+void main() async
 {
-  runApp (MyApp());
+  // Ensure that the Flutter engine is initialized before running the app
+  WidgetsFlutterBinding.ensureInitialized();
+  final localDb = LocalDb();
+  await localDb.database;
+  runApp(MyApp(db: localDb));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final LocalDb db;
+  const MyApp({super.key, required this.db});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      home: HomePage(db : db),
     );
   }
 }

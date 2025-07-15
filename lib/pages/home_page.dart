@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:masterclass_2/LocalDb.dart';
 import 'package:masterclass_2/utilities/add_window.dart';
 import 'package:masterclass_2/utilities/task_block.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final LocalDb db;
+  const HomePage({super.key, required this.db});
 
   @override
   State<HomePage> createState() => _HomePageState();

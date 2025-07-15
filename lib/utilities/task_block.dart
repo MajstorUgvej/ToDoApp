@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:masterclass_2/LocalDb.dart';
 
 class TaskBlock extends StatelessWidget {
   
@@ -8,28 +9,43 @@ class TaskBlock extends StatelessWidget {
   final Function(bool?)? onChanged;
   final VoidCallback delete;
   
-  const TaskBlock({super.key, 
+  TaskBlock({super.key, 
     required this.text, 
     required this.isChecked, 
     required this.onChanged,
     required this.delete
   });
 
+  final LocalDb db = LocalDb();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
           padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
           child: Slidable(
-            endActionPane: ActionPane(motion: StretchMotion(),
+            endActionPane: ActionPane(motion: DrawerMotion(),
              children: [
               SlidableAction(
                 onPressed: (context) => delete(),
                 icon: Icons.delete,
                 backgroundColor: Colors.red,
-                borderRadius: BorderRadius.circular(15),
-                
-              )
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  bottomLeft: Radius.circular(15)
+                ),
+              ),
+              SlidableAction(
+                flex: 2,
+                onPressed: (context) {
+                  // TODO: Implement edit functionality
+                },
+                icon: Icons.edit,
+                backgroundColor: Colors.blue,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(15),
+                  bottomRight: Radius.circular(15)
+                ),
+              ),
             ],),
             child: Container(
               padding: EdgeInsets.all(24),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:masterclass_2/LocalDb.dart';
 import 'package:masterclass_2/utilities/add_window.dart';
 import 'package:masterclass_2/utilities/task_block.dart';
 
@@ -10,6 +11,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // Instance of LocalDb to access the database
+  final LocalDb db = LocalDb();
+
   // List of tasks
   final List toDoList= [
     ["Make your bed", false],
@@ -29,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   TextEditingController myController = TextEditingController();
 
   // save task
-  void onSaved()
+  void onSaved() async
   {
     setState(() {
       toDoList.add([myController.text, false]);

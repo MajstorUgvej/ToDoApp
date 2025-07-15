@@ -21,15 +21,27 @@ class TaskBlock extends StatelessWidget {
     return Padding(
           padding: const EdgeInsets.only(left: 25, right: 25, top: 25),
           child: Slidable(
-            endActionPane: ActionPane(motion: StretchMotion(),
+            endActionPane: ActionPane(motion: DrawerMotion(),
              children: [
               SlidableAction(
                 onPressed: (context) => delete(),
                 icon: Icons.delete,
                 backgroundColor: Colors.red,
-                borderRadius: BorderRadius.circular(15),
-                
-              )
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  bottomLeft: Radius.circular(15)
+                ),
+              ),
+              SlidableAction(
+                flex: 2,
+                onPressed: (context) => onChanged!(isChecked),
+                icon: Icons.edit,
+                backgroundColor: Colors.blue,
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(15),
+                  bottomRight: Radius.circular(15)
+                ),
+              ),
             ],),
             child: Container(
               padding: EdgeInsets.all(24),

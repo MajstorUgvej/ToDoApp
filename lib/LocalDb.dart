@@ -1,6 +1,7 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+
 class LocalDb { 
   // Singleton pattern all parts of the app can access the same instance
   static final LocalDb _instance = LocalDb._internal();
@@ -9,6 +10,7 @@ class LocalDb {
   LocalDb._internal();
 
   Database? _database;
+
 
   // Getter for the database, called by using LocalDb().database
   Future<Database> get database async {
@@ -42,6 +44,11 @@ class LocalDb {
     );
   }
 
+
+
+
+
+  
   
   // Adding tasks to the database
   Future<void> addTask(String title) async {
@@ -53,10 +60,25 @@ class LocalDb {
   }
 
   // Fetching all tasks from the database
-  Future<List<Map<String, dynamic>>> fetchTasks() async {
+  Future fetchTasks() async {
     final db = await database;
-    final vare = await db.rawQuery('SELECT * FROM tasks');
-    return vare;
+    final alldata = await db.rawQuery('SELECT * FROM tasks');
+    return alldata;
   }
 
+  // Updating a task's completion status
+  Future<void> updateTask(int id, bool isCompleted) async {
+    final db = await database;
+    await db.rawUpdate(
+      'UPDATE tasks SET isCompleted = ? WHERE id = ?',
+      [isCompleted ? 1 : 0, id]
+    );
+  }
+
+  // Delete task by id
+  Future<void> deleteTask(int id) async {
+    final db = await database;
+    await db.rawDelete('DELETE FROM tasks WHERE id = ?', [id]);
+  }
+  
 }

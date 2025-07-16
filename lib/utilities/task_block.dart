@@ -38,6 +38,9 @@ class TaskBlock extends StatelessWidget {
                 flex: 2,
                 onPressed: (context) {
                   // TODO: Implement edit functionality
+                  db.fetchTasks().then((tasks) {
+                    print(tasks);
+                  });
                 },
                 icon: Icons.edit,
                 backgroundColor: Colors.blue,

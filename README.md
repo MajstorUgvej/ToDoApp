@@ -4,16 +4,6 @@ A simple and lightweight ToDo application built using Flutter. It allows users t
 
 ---
 
-## 📱 Features
-
-- ✅ Add and delete tasks
-- ✏️ Edit existing tasks
-- 📌 Mark tasks as done/undone
-- 💾 Local data persistence using SQLite (`sqflite`)
-- 📦 Clean architecture and modular code
-
----
-
 ## 🛠️ Technologies Used
 
 - **Flutter** – UI toolkit for building natively compiled apps
@@ -23,5 +13,24 @@ A simple and lightweight ToDo application built using Flutter. It allows users t
 
 ---
 
-## 📂 Project Structure
+#📋 Installation
 
+1. **Clone the repository:**
+
+2. Install dependencies: flutter pub get
+
+3. Run the app: flutter run
+
+---
+
+#💽 Local Database Setup
+
+The app uses the sqflite package to create and manage a local SQLite database. On first run, a tasks.db file is created automatically in the app’s local storage directory.
+
+Each task includes:
+
+* id (int, auto-incremented)
+
+* title (string)
+
+* isDone (bool)

@@ -15,7 +15,7 @@ A simple and lightweight ToDo application built using Flutter. It allows users t
 
 ## Installation
 
-1. Clone the repository
+1. Clone the repository: git clone https://github.com/MajstorUgvej/ToDoApp.git
 
 2. Install dependencies: flutter pub get
 

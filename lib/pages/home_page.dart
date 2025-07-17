@@ -146,8 +146,8 @@ class _HomePageState extends State<HomePage> {
           );
         },
       ),
-      // TO DO: Disable the FAB when editing
-      floatingActionButton:  FloatingActionButton(onPressed: () {
+      // FAB is disabled when editing
+      floatingActionButton: isEditing? null :  FloatingActionButton(onPressed: () {
         showDialog(
           context: context, 
           builder:(context) {

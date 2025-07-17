@@ -11,6 +11,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // Edit tasks initial values
+  bool isEditing = false;
+  late FocusNode focusNode;
+  late TextEditingController myEditController;
+  int? position;
+
   // Instance of LocalDb to access the database
   final LocalDb db = LocalDb();
   get database async => await db.database;
@@ -21,9 +27,36 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    // load database
     loadTasks();
+    // Initialize the focus node and text controller
+    focusNode = FocusNode();
+    myEditController = TextEditingController();
   }
   
+  @override
+  void dispose() {
+    // Dispose of the focus node and text controller
+    focusNode.dispose();
+    myController.dispose();
+    super.dispose();
+  }
+
+  void startEditing(int index) {
+
+    position = index; // Store the current index for editing
+    myEditController.text = tasks[index]['title']; // Set the text for editing
+
+    setState(() {
+      isEditing = true;
+    });
+    
+    // delay to ensure the text field is built before requesting focus
+    Future.delayed(Duration(milliseconds: 100), () {
+      focusNode.requestFocus();
+    });
+  }
+
   Future<void> loadTasks() async {
     tasks = await db.fetchTasks();
     setState(() {});
@@ -56,6 +89,15 @@ class _HomePageState extends State<HomePage> {
     await loadTasks(); 
   }
 
+  // Edit task
+  void editTask(int index) async{
+    await db.updateTaskTitle(tasks[index]['id'], myEditController.text);
+    await loadTasks(); // Reload tasks from the database
+    setState(() {
+      isEditing = false;
+    });
+  }
+
   // controller
   TextEditingController myController = TextEditingController();
 
@@ -68,7 +110,30 @@ class _HomePageState extends State<HomePage> {
         title: const Text('TO DO', style: TextStyle(color: Colors.white),),
         centerTitle: true,
       ),
-      body: ListView.builder(
+      body: isEditing?
+      Center(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: TextField(
+            maxLines: null,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide.none
+              ),
+              fillColor: Color.fromARGB(255, 255, 211, 105),
+              filled: true,
+            ),
+            controller: myEditController,
+            focusNode: focusNode,
+            autofocus: true,
+            onTapOutside: (event) {
+                editTask(position!);
+            },
+          ),
+        )
+      ) 
+      : ListView.builder(
         itemCount: tasks.length,
         itemBuilder: (context, index) {
           final task = tasks[index];
@@ -77,10 +142,12 @@ class _HomePageState extends State<HomePage> {
             isChecked: task['isCompleted'] == 1,
             onChanged: (val) => changeTaskState(index),
             delete: () => deleteTask(index),
+            startEditing:() => startEditing(index),
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
+      // TO DO: Disable the FAB when editing
+      floatingActionButton:  FloatingActionButton(onPressed: () {
         showDialog(
           context: context, 
           builder:(context) {
@@ -91,6 +158,7 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Color.fromARGB(255, 238, 238, 238),
       child: Icon(Icons.add),
       ),
+      
     );
   }
 }

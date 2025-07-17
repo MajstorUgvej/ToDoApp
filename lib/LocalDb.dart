@@ -43,12 +43,6 @@ class LocalDb {
       },
     );
   }
-
-
-
-
-
-  
   
   // Adding tasks to the database
   Future<void> addTask(String title) async {
@@ -72,6 +66,15 @@ class LocalDb {
     await db.rawUpdate(
       'UPDATE tasks SET isCompleted = ? WHERE id = ?',
       [isCompleted ? 1 : 0, id]
+    );
+  }
+
+  // Updating a task's title
+  Future<void> updateTaskTitle(int id, String title) async {
+    final db = await database;
+    await db.rawUpdate(
+      'UPDATE tasks SET title = ? WHERE id = ?',
+      [title, id]
     );
   }
 

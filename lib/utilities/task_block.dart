@@ -8,12 +8,14 @@ class TaskBlock extends StatelessWidget {
   final bool isChecked;
   final Function(bool?)? onChanged;
   final VoidCallback delete;
+  final VoidCallback startEditing;
   
   TaskBlock({super.key, 
     required this.text, 
     required this.isChecked, 
     required this.onChanged,
-    required this.delete
+    required this.delete,
+    required this.startEditing,
   });
 
   final LocalDb db = LocalDb();
@@ -36,12 +38,7 @@ class TaskBlock extends StatelessWidget {
               ),
               SlidableAction(
                 flex: 2,
-                onPressed: (context) {
-                  // TODO: Implement edit functionality
-                  db.fetchTasks().then((tasks) {
-                    print(tasks);
-                  });
-                },
+                onPressed: (context) => startEditing(), 
                 icon: Icons.edit,
                 backgroundColor: Colors.blue,
                 borderRadius: BorderRadius.only(
@@ -52,22 +49,28 @@ class TaskBlock extends StatelessWidget {
             ],),
             child: Container(
               padding: EdgeInsets.all(24),
+              
               decoration: BoxDecoration(
                 color: Color.fromARGB(255, 255, 211, 105),
-                borderRadius: BorderRadius.circular(15)
+                borderRadius: BorderRadius.circular(15),
+                
               ),
               child: Row(
-                children: [
-                  Checkbox(value: isChecked, onChanged: onChanged, activeColor: Color.fromARGB(255, 34, 40, 49),),
-                  Text(text, style: TextStyle(
-                    decoration: isChecked? TextDecoration.lineThrough : TextDecoration.none,
-                    color: Color.fromARGB(255, 34, 40, 49),
-                    fontSize: 15
-                  ),),
-                ],
+                  
+                  children: [
+                    Checkbox(value: isChecked, onChanged: onChanged, activeColor: Color.fromARGB(255, 34, 40, 49),),
+                    Expanded(
+                      child: Text(text, style: TextStyle(
+                        decoration: isChecked? TextDecoration.lineThrough : TextDecoration.none,
+                        color: Color.fromARGB(255, 34, 40, 49),
+                        fontSize: 15
+                      ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
     );
   }
 }

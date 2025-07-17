@@ -34,3 +34,7 @@ Each task includes:
 * title (string)
 
 * isDone (bool)
+
+
+### Preview
+<img src="Preview.png" /> 

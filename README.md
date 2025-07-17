@@ -35,6 +35,7 @@ Each task includes:
 
 * isDone (bool)
 
+---
 
 ### Preview
-<img src="Preview.png" /> 
+<img src="Preview.png" width = 200/> 
